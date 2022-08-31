@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <form action="/mockInput" method="post" enctype="application/x-www-form-urlencoded">
+        <label><b>Request信息</b></label><br>
+        URI<br>
+        <input type="text" name="URI"><br>
+        方法(GET/POST)<br>
+        <input type="text" name="method" value="GET"><br>
+        参数<br>
+        <input type="text" name="reqkey1">
+        <input type="text" name="reqvalue1"><br>
+        <input type="text" name="reqkey2">
+        <input type="text" name="reqvalue2"><br>
+        Header<br>
+        <input type="text" name="reqkey1">
+        <input type="text" name="reqvalue1"><br>
+        <input type="text" name="reqkey2">
+        <input type="text" name="reqvalue2"><br>
+        <label><b>Response信息</b></label><br>
+        Status<br>
+        <input type="text" name="status" value="200"><br>
+        Format<br>
+        <input type="text" name="format" value="application/json;charset=UTF-8"><br>  
+        Body<br>
+        <input type="text" name="Body" value="{&quot;sucess&quot;:0, &quot;msg&quot;:&quot;生成成功&quot;，&quot;code&quot;:1231}"><br>  
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
