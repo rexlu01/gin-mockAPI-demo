@@ -27,8 +27,3 @@ Rules:
     - Status: 200
     - Format: application/json;charset=UTF-8
     - Body: {"success":0,"code":541994}
-        
-    
-
-
-
