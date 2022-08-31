@@ -22,7 +22,7 @@ func main() {
 			if ReturnRealEnv, ok := EnvV["ReturnRealEnv"]; ok {
 				//fmt.Println(ReturnRealEnv)
 				if ReturnRealEnv.(bool) {
-					//如果是真的环境
+					//如果是真的环境todo
 				} else {
 					//如果是mock环境
 					//拿到规则名字
@@ -31,6 +31,10 @@ func main() {
 						if ReqMethodV, ok := ReqV["Method"]; ok {
 							if strings.ToLower(ReqMethodV.(string)) == "get" {
 								fmt.Println(RulesName)
+								//todo这里根据规则name生成对应的Get mock API
+							} else if strings.ToLower(ReqMethodV.(string)) == "post" {
+								fmt.Println(RulesName)
+								//todo这里根据规则name生成对应的Post mock API
 							}
 
 						}
@@ -42,6 +46,8 @@ func main() {
 		}
 
 	}
+
+	fmt.Println(util.ReturnPort())
 
 }
 
@@ -62,36 +68,3 @@ func GenerateAPIGET(Name string, URL string, ReqHeader map[string]string, ReqPer
 	})
 
 }
-
-// func ParseYamlConf() (URL string, RepPer map[string]string, Format string, status int, Body map[string]string) {
-// 	yaml := new(util.IPv4Yaml)
-// 	yaml, err := util.ReadYaml("./MockAdmin/Env/", "10.0.0.15")
-// 	if err != nil {
-// 		panic(err)
-// 	}
-
-// 	//fmt.Println(yaml.Relus)
-
-// 	for _, v := range yaml.Relus {
-// 		for _, rspValue := range v.Response {
-
-// 			for _, v := range rspValue {
-// 				//fmt.Printf("type : %T; value : %v\n", v, v)
-// 				if value, ok := v.(map[interface{}]interface{}); ok {
-// 					for k, v := range value {
-// 						if kv, isE := k.(string); isE {
-// 							fmt.Println(kv)
-// 						}
-// 						if v2, isE := v.(string); isE {
-// 							fmt.Println(v2)
-// 							fmt.Printf("%T", v)
-// 						}
-
-// 					}
-
-// 				}
-// 			}
-// 		}
-// 	}
-
-// }

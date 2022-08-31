@@ -3,6 +3,8 @@ package util
 import (
 	"bufio"
 	"errors"
+	"math/rand"
+	"time"
 
 	"io"
 	"io/ioutil"
@@ -112,4 +114,10 @@ func ReadYaml(path string, reqIP string) (ipYaml *IPv4Yaml, err error) {
 	}
 
 	return ipYaml, nil
+}
+
+//随机一个端口号
+func ReturnPort() (portNo int) {
+	rand.Seed(time.Now().UnixNano())
+	return rand.Intn(2000) + 8000
 }

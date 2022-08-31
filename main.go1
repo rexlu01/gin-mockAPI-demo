@@ -82,5 +82,8 @@ func main() {
 	// 	c.JSON(200, pingAPIdata)
 	// })
 
-	r.Run(reqIP + ":8010")
+	portNum := util.ReturnPort()
+	fmt.Println("portNum", portNum)
+
+	r.Run(reqIP + ":" + fmt.Sprintf("%d", portNum))
 }
