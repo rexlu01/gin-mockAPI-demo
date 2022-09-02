@@ -18,10 +18,11 @@ type Rules struct {
 }
 
 //总分支处理逻辑
-func TotalMakeYaml() {
-	var r Rules
+func (r *Rules) TotalMakeYaml(requestIpv4 string) []string {
+	var SuccessList []string = []string{}
+	//var r Rules
 	yaml := new(util.IPv4Yaml)
-	yaml, err := util.ReadYaml("./MockAdmin/Env/", "10.0.0.15")
+	yaml, err := util.ReadYaml("./MockAdmin/Env/", requestIpv4)
 	if err != nil {
 		panic(err)
 	}
@@ -42,6 +43,7 @@ func TotalMakeYaml() {
 						if ReqMethodV, ok := ReqV["Method"]; ok {
 							if strings.ToLower(ReqMethodV.(string)) == "get" {
 								r.GenerateAPIGET(RulesName)
+								SuccessList = append(SuccessList, RulesName)
 								//todo这里根据规则name生成对应的Get mock API
 							} else if strings.ToLower(ReqMethodV.(string)) == "post" {
 								fmt.Println(RulesName)
@@ -57,6 +59,7 @@ func TotalMakeYaml() {
 		}
 
 	}
+	return SuccessList
 }
 
 //组装GET请求
@@ -150,26 +153,16 @@ func (r *Rules) GenerateAPIGET(RulesName string) {
 			c.JSON(r.Status, r.ResponseBody)
 		}
 	})
-	util.GetLocalIPv4()
+	LocalIPv4, err := util.GetLocalIPv4()
+
+	if err != nil {
+		//errors.New("本机IP获取失败")
+		panic(err)
+	}
 
 	port := fmt.Sprintf("%d", util.ReturnPort())
 
-	router.Run(":" + port)
+	router.Run(LocalIPv4 + ":" + port)
 }
-
-// r := gin.Default()
-// r.GET(URL, func(c *gin.Context) {
-// 	if strings.Contains(strings.ToLower(Format), "application/json") {
-// 		ReqHeader = make(map[string]string)
-// 		for k, v := range ReqHeader {
-// 			c.Header(k, v)
-// 		}
-// 		ReqPer = make(map[string]string)
-// 		for k, v := range ReqPer {
-// 			c.DefaultQuery(k, v)
-// 		}
-// 		c.JSON(status, Body)
-// 	}
-// })
 
 //组装POST请求
