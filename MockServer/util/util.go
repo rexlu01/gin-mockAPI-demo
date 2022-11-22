@@ -121,3 +121,5 @@ func ReturnPort() (portNo int) {
 	rand.Seed(time.Now().UnixNano())
 	return rand.Intn(2000) + 8000
 }
+
+//创建目录及文件
