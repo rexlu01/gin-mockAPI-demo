@@ -141,6 +141,7 @@ func (r *Rules) GenerateAPIGET(RulesName string) {
 	}
 
 	router := gin.Default()
+	router.Handle()
 	router.GET(r.URL, func(c *gin.Context) {
 		for _, perameterValue := range r.RequestPerameter {
 			c.DefaultQuery(perameterValue, "")

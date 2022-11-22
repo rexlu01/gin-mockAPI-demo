@@ -92,7 +92,7 @@ func HttpMockAPIclient(requestIpv4 string, rulesName string) string {
 								if err != nil {
 									return ""
 								}
-
+								//这里还要解析json
 								BodyRes, err := json.Marshal(body)
 								if err != nil {
 									return string(BodyRes)
