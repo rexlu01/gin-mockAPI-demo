@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"ginvue/MockServer/util"
+	"ginvue/Server/util"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
