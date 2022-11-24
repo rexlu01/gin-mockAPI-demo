@@ -1,0 +1,13 @@
+- id: "get-users"
+  url: "/api-1/users"
+  method: "GET"
+  variants:
+     - id: "success"
+       type: "json"
+       options: 
+          status: 200
+          body:
+            - id: 1
+            - name: "John Doe"
+         
+
