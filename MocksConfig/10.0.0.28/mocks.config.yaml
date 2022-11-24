@@ -1,7 +1,0 @@
-log: "debug"
-server:
-   port: 3200
-returntrue: true
-mock: 
-   collections: 
-      selected: "base"

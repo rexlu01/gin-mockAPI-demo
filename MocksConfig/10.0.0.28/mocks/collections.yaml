@@ -1,4 +1,0 @@
-- id: "base"
-  routes:
-    - "get-users:success"
-    
