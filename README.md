@@ -1,6 +1,6 @@
 ## Mock Server
-### 技术栈： gin
-### 主要作用：
+### 技术栈： gin，通用Http client
+### 系统架构：
 1. Before： 被测服务-->第三方服务
 2. Now: 被测服务-->MockServer-->第三方服务
             
