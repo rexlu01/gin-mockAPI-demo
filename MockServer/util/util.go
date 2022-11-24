@@ -131,6 +131,8 @@ func InitConfigFile(ProbjectId string) {
 	check(err)
 	err = os.Mkdir("MocksConfig/"+ProbjectId+"/mocks/routes", 0777)
 	check(err)
+	err = os.Mkdir("MocksConfig/"+ProbjectId+"/returntrue", 0777)
+	check(err)
 
 	//创建文件
 	f, err := os.Create("MocksConfig/" + ProbjectId + "/mocks.config.yaml")
@@ -140,6 +142,10 @@ func InitConfigFile(ProbjectId string) {
 	check(err)
 	defer f.Close()
 	f, err = os.Create("MocksConfig/" + ProbjectId + "/mocks/routes/user.yaml")
+	check(err)
+	defer f.Close()
+
+	f, err = os.Create("MocksConfig/" + ProbjectId + "/returntrue/response.yaml")
 	check(err)
 	defer f.Close()
 

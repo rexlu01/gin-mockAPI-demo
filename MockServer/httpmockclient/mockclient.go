@@ -23,10 +23,10 @@ func HttpMockAPIclient(requestIpv4 string, rulesName string) string {
 			//EnvV = make(map[string]interface{})
 			if ReturnRealEnv, ok := EnvV["ReturnRealEnv"]; ok {
 				//fmt.Println(ReturnRealEnv)
-				if ReturnRealEnv.(bool) {
-					//如果是真的环境todo
+				if ReturnRealEnv.(bool) == false {
+					//如果是mock环境，就生成一个http API（用Gin）
 				} else {
-					//如果是mock环境
+					//如果是真的环境todo,这里应该是转发请求
 					//拿到规则名字
 					for _, rule := range rulesList {
 						if rule == RelusV.Name {

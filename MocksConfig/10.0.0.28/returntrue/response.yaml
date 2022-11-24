@@ -1,0 +1,7 @@
+- id: "get-gupiao"
+  url: "/api-1/users"
+  method: "GET"
+  Header: {nb_deviceid:1E}
+  Perameter: {token:fake}
+
+         
