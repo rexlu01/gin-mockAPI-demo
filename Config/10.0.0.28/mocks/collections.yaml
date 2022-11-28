@@ -1,4 +1,6 @@
-- id: "base"
-  routes:
-    - "get-users:success"
-    
+- id: "base" 
+  routes: 
+    - "get-users:all"
+- id: "base2" 
+  routes: 
+    - "get-users:all2"
