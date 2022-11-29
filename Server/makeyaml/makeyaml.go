@@ -39,7 +39,7 @@ type Collections struct {
 	Routes []string `yaml:"routes"`
 }
 
-func ReadCollections(Path string) (*[]Collections, error) {
+func ReadCollections(Path string) ([]Collections, error) {
 	var coll []Collections
 	file, err := ioutil.ReadFile(Path)
 	if err != nil {
@@ -51,7 +51,7 @@ func ReadCollections(Path string) (*[]Collections, error) {
 		return nil, err
 	}
 
-	return &coll, err
+	return coll, err
 
 }
 
@@ -77,7 +77,7 @@ type Variant struct {
 	}
 }
 
-func ReadUser(path string) (*[]User, error) {
+func ReadUser(path string) ([]User, error) {
 	var u []User
 	file, err := ioutil.ReadFile(path)
 	if err != nil {
@@ -89,6 +89,6 @@ func ReadUser(path string) (*[]User, error) {
 		return nil, err
 	}
 
-	return &u, err
+	return u, err
 
 }

@@ -3,6 +3,7 @@ package util
 import (
 	"bufio"
 	"errors"
+	"fmt"
 	"math/rand"
 	"time"
 
@@ -16,6 +17,8 @@ import (
 	"github.com/gin-gonic/gin"
 	"gopkg.in/yaml.v2"
 )
+
+const Config string = "Config/"
 
 type IPv4Yaml struct {
 	Relus []Rule `yaml:"Rules"`
@@ -125,23 +128,23 @@ func ReturnPort() (portNo int) {
 //创建目录及文件
 func InitConfigFile(ProbjectId string) {
 	//创建文件夹
-	err := os.Mkdir("MocksConfig/"+ProbjectId, 0777)
+	err := os.Mkdir("Config/"+ProbjectId, 0777)
 	check(err)
-	err = os.Mkdir("MocksConfig/"+ProbjectId+"/mocks", 0777)
+	err = os.Mkdir("Config/"+ProbjectId+"/mocks", 0777)
 	check(err)
-	err = os.Mkdir("MocksConfig/"+ProbjectId+"/mocks/routes", 0777)
+	err = os.Mkdir("Config/"+ProbjectId+"/mocks/routes", 0777)
 	check(err)
 	// err = os.Mkdir("MocksConfig/"+ProbjectId+"/returntrue", 0777)
 	// check(err)
 
 	//创建文件
-	f, err := os.Create("MocksConfig/" + ProbjectId + "/mocks.config.yaml")
+	f, err := os.Create("Config/" + ProbjectId + "/mocks.config.yaml")
 	check(err)
 	defer f.Close()
-	f, err = os.Create("MocksConfig/" + ProbjectId + "/mocks/collections.yaml")
+	f, err = os.Create("Config/" + ProbjectId + "/mocks/collections.yaml")
 	check(err)
 	defer f.Close()
-	f, err = os.Create("MocksConfig/" + ProbjectId + "/mocks/routes/user.yaml")
+	f, err = os.Create("Config/" + ProbjectId + "/mocks/routes/user.yaml")
 	check(err)
 	defer f.Close()
 
@@ -159,7 +162,7 @@ func check(err error) {
 	}
 }
 
-////判断路径是否存在
+//判断路径是否存在
 func PathExists(path string) (bool, error) {
 	_, err := os.Stat(path)
 	if err == nil {
@@ -169,4 +172,21 @@ func PathExists(path string) (bool, error) {
 		return false, nil
 	}
 	return false, err
+}
+
+//获取某目录下所有的文件夹
+func CollectDirs(path string) ([]string, error) {
+	var res []string = []string{}
+	rd, err := ioutil.ReadDir(path)
+	if err != nil {
+		fmt.Printf("read dir fail:%v", err)
+		return res, err
+	}
+	for _, dir := range rd {
+		if dir.IsDir() {
+			res = append(res, dir.Name())
+		}
+	}
+	return res, nil
+
 }
