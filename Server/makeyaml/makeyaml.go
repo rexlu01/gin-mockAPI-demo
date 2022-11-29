@@ -1,7 +1,6 @@
 package makeyaml
 
 import (
-	"fmt"
 	"io/ioutil"
 
 	"gopkg.in/yaml.v2"
@@ -52,8 +51,44 @@ func ReadCollections(Path string) (*[]Collections, error) {
 		return nil, err
 	}
 
-	fmt.Println(&coll)
-
 	return &coll, err
+
+}
+
+type User struct {
+	Id       string `yaml:"id"`
+	URL      string `yaml:"url"`
+	Method   string `yaml:"method"`
+	Variants []Variant
+}
+
+type Variant struct {
+	ID      string `yaml:"id"`
+	Options struct {
+		Request struct {
+			Headers []string `yaml:"headers"`
+			Params  []string `yaml:"params"`
+		}
+		Response struct {
+			Restype string   `yaml:"restype"`
+			Status  int      `yaml:"status"`
+			Body    []string `yaml:"body"`
+		}
+	}
+}
+
+func ReadUser(path string) (*[]User, error) {
+	var u []User
+	file, err := ioutil.ReadFile(path)
+	if err != nil {
+		return nil, err
+	}
+
+	err = yaml.Unmarshal(file, &u)
+	if err != nil {
+		return nil, err
+	}
+
+	return &u, err
 
 }
