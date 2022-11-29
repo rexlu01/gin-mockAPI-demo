@@ -40,6 +40,6 @@ func GetConfigPath(SourceIP string) (yamlPath map[string]string) {
 
 }
 
+func IsReturnMock() bool {
 
-
-func 
+}
