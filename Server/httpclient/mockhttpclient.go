@@ -2,15 +2,9 @@ package httpclient
 
 import (
 	"fmt"
+	"ginvue/Server/makeyaml"
 	"ginvue/Server/util"
 )
-
-type req struct {
-	Method  string
-	UrI     string
-	Headers string
-	Params  []byte
-}
 
 func GetConfigPath(SourceIP string) (yamlPath map[string]string) {
 	yamlPath = make(map[string]string)
@@ -40,6 +34,14 @@ func GetConfigPath(SourceIP string) (yamlPath map[string]string) {
 
 }
 
-func IsReturnMock() bool {
+func IsReturnReal(SourceIP string) bool {
+	yamlPath := GetConfigPath(SourceIP)
+
+	mockConf, err := makeyaml.ReadMocksConfig(yamlPath["mockConfigPath"])
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	return *&mockConf.Mock.Returnreal
 
 }
