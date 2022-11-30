@@ -4,11 +4,14 @@ import (
 	"fmt"
 	"ginvue/Server/makeyaml"
 	"ginvue/Server/util"
+	"strings"
 )
 
 type MockHttpInfo struct {
+	SourceIP     string //预留的字段
 	IsReturnReal bool
 	UserPath     string
+	RoutesId     string
 	VariantId    string
 }
 
@@ -19,6 +22,7 @@ func NewMockHttpInfo(SourceIP string) *MockHttpInfo {
 	PathNames = GetConfigPath(SourceIP)
 	m.UserPath = PathNames["userPath"]
 	m.IsReturnReal = IsReturnReal(PathNames["mockConfigPath"])
+	m.RoutesId, m.VariantId = GetIdsFormCollections(PathNames)
 
 	return m
 
@@ -64,7 +68,7 @@ func IsReturnReal(mockConfigPath string) bool {
 
 }
 
-func GetVariantId(yamlPath map[string]string) (routesId string, variantId string) {
+func GetIdsFormCollections(yamlPath map[string]string) (routesId string, variantId string) {
 
 	mockConf, err := makeyaml.ReadMocksConfig(yamlPath["mockConfigPath"])
 	if err != nil {
@@ -82,8 +86,13 @@ func GetVariantId(yamlPath map[string]string) (routesId string, variantId string
 
 	for _, collections := range collectionsConfList {
 		if collections.Id == collectionsId {
-
+			//这里简单处理 默认列表只有一个元素，后续要处理，为啥会有多个routes？？
+			IdStrings := collections.Routes[0]
+			routesId = strings.Split(IdStrings, ":")[0]
+			variantId = strings.Split(IdStrings, ":")[1]
 		}
 	}
+
+	return routesId, variantId
 
 }
