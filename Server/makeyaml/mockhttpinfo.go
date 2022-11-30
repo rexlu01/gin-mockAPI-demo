@@ -1,8 +1,7 @@
-package httpclient
+package makeyaml
 
 import (
 	"fmt"
-	"ginvue/Server/makeyaml"
 	"ginvue/Server/util"
 	"strings"
 )
@@ -58,7 +57,7 @@ func GetConfigPath(SourceIP string) (yamlPath map[string]string) {
 
 func IsReturnReal(mockConfigPath string) bool {
 
-	mockConf, err := makeyaml.ReadMocksConfig(mockConfigPath)
+	mockConf, err := ReadMocksConfig(mockConfigPath)
 	if err != nil {
 		//预留log模块
 		fmt.Println(err)
@@ -70,7 +69,7 @@ func IsReturnReal(mockConfigPath string) bool {
 
 func GetIdsFormCollections(yamlPath map[string]string) (routesId string, variantId string) {
 
-	mockConf, err := makeyaml.ReadMocksConfig(yamlPath["mockConfigPath"])
+	mockConf, err := ReadMocksConfig(yamlPath["mockConfigPath"])
 	if err != nil {
 		//预留log模块
 		fmt.Println(err)
@@ -78,7 +77,7 @@ func GetIdsFormCollections(yamlPath map[string]string) (routesId string, variant
 
 	collectionsId := *&mockConf.Mock.Collections.Selected
 
-	collectionsConfList, err := makeyaml.ReadCollections(yamlPath["collectionsPath"])
+	collectionsConfList, err := ReadCollections(yamlPath["collectionsPath"])
 	if err != nil {
 		//预留log模块
 		fmt.Println(err)

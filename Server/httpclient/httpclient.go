@@ -21,6 +21,7 @@ type Resp struct {
 type HTTPmessages struct{
 	Method  string
 	URL     string //如果要返回真实响应需要给完整，所以这里要校验
+	
 }
 
 
