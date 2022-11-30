@@ -6,6 +6,27 @@ import (
 	"ginvue/Server/util"
 )
 
+type MockHttpInfo struct {
+	IsReturnReal    bool
+	MockConfigPath  string
+	CollectionsPath string
+	UserPath        string
+	CollectionId    string
+	RouteId         string
+	variantId       string
+}
+
+//析构函数
+func NewMockHttpInfo(SourceIP string) *MockHttpInfo {
+	m := &MockHttpInfo{}
+	PathNames := make(map[string]string)
+	PathNames = GetConfigPath(SourceIP)
+	m.MockConfigPath = PathNames["mockConfigPath"]
+	m.CollectionsPath = PathNames["collectionsPath"]
+	m.UserPath = PathNames["userPath"]
+
+}
+
 func GetConfigPath(SourceIP string) (yamlPath map[string]string) {
 	yamlPath = make(map[string]string)
 	yamlPath["mockConfigPath"] = ""
@@ -35,7 +56,7 @@ func GetConfigPath(SourceIP string) (yamlPath map[string]string) {
 }
 
 func IsReturnReal(SourceIP string) bool {
-	yamlPath := GetConfigPath(SourceIP)
+	//yamlPath := GetConfigPath(SourceIP)
 
 	mockConf, err := makeyaml.ReadMocksConfig(yamlPath["mockConfigPath"])
 	if err != nil {
