@@ -7,13 +7,9 @@ import (
 )
 
 type MockHttpInfo struct {
-	IsReturnReal    bool
-	MockConfigPath  string
-	CollectionsPath string
-	UserPath        string
-	CollectionId    string
-	RouteId         string
-	variantId       string
+	IsReturnReal bool
+	UserPath     string
+	VariantId    string
 }
 
 //析构函数
@@ -21,9 +17,10 @@ func NewMockHttpInfo(SourceIP string) *MockHttpInfo {
 	m := &MockHttpInfo{}
 	PathNames := make(map[string]string)
 	PathNames = GetConfigPath(SourceIP)
-	m.MockConfigPath = PathNames["mockConfigPath"]
-	m.CollectionsPath = PathNames["collectionsPath"]
 	m.UserPath = PathNames["userPath"]
+	m.IsReturnReal = IsReturnReal(PathNames["mockConfigPath"])
+
+	return m
 
 }
 
@@ -55,14 +52,38 @@ func GetConfigPath(SourceIP string) (yamlPath map[string]string) {
 
 }
 
-func IsReturnReal(SourceIP string) bool {
-	//yamlPath := GetConfigPath(SourceIP)
+func IsReturnReal(mockConfigPath string) bool {
 
-	mockConf, err := makeyaml.ReadMocksConfig(yamlPath["mockConfigPath"])
+	mockConf, err := makeyaml.ReadMocksConfig(mockConfigPath)
 	if err != nil {
+		//预留log模块
 		fmt.Println(err)
 	}
 
 	return *&mockConf.Mock.Returnreal
+
+}
+
+func GetVariantId(yamlPath map[string]string) (routesId string, variantId string) {
+
+	mockConf, err := makeyaml.ReadMocksConfig(yamlPath["mockConfigPath"])
+	if err != nil {
+		//预留log模块
+		fmt.Println(err)
+	}
+
+	collectionsId := *&mockConf.Mock.Collections.Selected
+
+	collectionsConfList, err := makeyaml.ReadCollections(yamlPath["collectionsPath"])
+	if err != nil {
+		//预留log模块
+		fmt.Println(err)
+	}
+
+	for _, collections := range collectionsConfList {
+		if collections.Id == collectionsId {
+
+		}
+	}
 
 }
