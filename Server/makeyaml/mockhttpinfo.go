@@ -7,11 +7,12 @@ import (
 )
 
 type MockHttpInfo struct {
-	SourceIP     string //预留的字段
-	IsReturnReal bool
-	UserPath     string
-	RoutesId     string
-	VariantId    string
+	SourceIP       string //预留的字段
+	IsReturnReal   bool
+	UserPath       string
+	MockConfigPath string
+	RoutesId       string
+	VariantId      string
 }
 
 //析构函数
@@ -20,6 +21,7 @@ func NewMockHttpInfo(SourceIP string) *MockHttpInfo {
 	PathNames := make(map[string]string)
 	PathNames = GetConfigPath(SourceIP)
 	m.UserPath = PathNames["userPath"]
+	m.MockConfigPath = PathNames["mockConfigPath"]
 	m.IsReturnReal = IsReturnReal(PathNames["mockConfigPath"])
 	m.RoutesId, m.VariantId = GetIdsFormCollections(PathNames)
 
@@ -93,5 +95,49 @@ func GetIdsFormCollections(yamlPath map[string]string) (routesId string, variant
 	}
 
 	return routesId, variantId
+
+}
+
+//获取端口号
+func (m *MockHttpInfo) GerPort() int {
+	mockConf, err := ReadMocksConfig(m.MockConfigPath)
+	if err != nil {
+		//预留log模块
+		fmt.Println(err)
+	}
+	return *&mockConf.Server.Port
+}
+
+//中间函数，获取Route对象
+func (m *MockHttpInfo) GetRoute() (route User) {
+	Users, err := ReadUser(m.UserPath)
+	if err != nil {
+		fmt.Printf("errors : %v", err)
+	}
+
+	for _, Route := range Users {
+		if Route.Id == m.RoutesId {
+			route = Route
+		}
+
+	}
+	return route
+
+}
+
+//获取HttpURL
+func (m *MockHttpInfo) GetUrl() string {
+	route := m.GetRoute()
+	return route.URL
+}
+
+//获取HttpMethod
+func (m *MockHttpInfo) GetMethod() string {
+	route := m.GetRoute()
+	return route.Method
+}
+
+//获取HttpRequestHeadres
+func (m *MockHttpInfo) GetRequestHeaders() {
 
 }

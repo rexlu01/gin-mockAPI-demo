@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"math/rand"
+	"net/url"
 	"time"
 
 	"io"
@@ -188,5 +189,20 @@ func CollectDirs(path string) ([]string, error) {
 		}
 	}
 	return res, nil
+
+}
+
+//验证URL合法
+func ValidateURL(u string) (bool, error) {
+	_, err := url.ParseRequestURI(u)
+	if err != nil {
+		return false, err
+	}
+	Url, err := url.Parse(u)
+	if err != nil || Url.Scheme == "" || Url.Host == "" {
+		return false, err
+	}
+
+	return true, nil
 
 }
