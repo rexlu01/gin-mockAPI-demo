@@ -1,5 +1,15 @@
 package main
 
-func MainHttpMocks() {
+import (
+	"github.com/gin-gonic/gin"
+)
+
+func MainHttpMocks(Method string, URL string) {
+	r := gin.Default()
+	r.Handle(Method, URL)
+
+}
+
+func MockContext(c *gin.Context) {
 
 }
