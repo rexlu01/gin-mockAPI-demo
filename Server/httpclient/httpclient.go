@@ -1,34 +1,44 @@
 package httpclient
 
-import "net/http"
+import (
+	"fmt"
+	"ginvue/Server/util"
+	"io/ioutil"
+	"net/http"
+	"net/url"
+)
 
+func MainHttpClient(Methood string, URL string, Headers map[string]string, Params map[string]string) (respStatus string, respBody string) {
+	defer func() {
+		err := recover()
+		if err != nil {
+			fmt.Println(err)
+		}
+	}()
 
-type RealHttpConf {
+	req, err := http.NewRequest(Methood, URL, nil)
+	if err != nil {
+		//这里后续log模块
+		util.Check(err)
+	}
 
+	params := make(url.Values)
+	for k, v := range Params {
+		params.Add(k, v)
+	}
+	req.URL.RawQuery = params.Encode()
 
-	
-}
+	//设置headers
+	for k, v := range Headers {
+		req.Header.Set(k, v)
+	}
 
-type Req struct {
-	Headers string
-	Params  []byte
-}
+	r, err := http.DefaultClient.Do(req)
+	defer func() {
+		_ = r.Body.Close()
+	}()
 
-type Resp struct {
+	body, _ := ioutil.ReadAll(r.Body)
+	return r.Status, string(body)
 
-}
-
-type HTTPmessages struct{
-	Method  string
-	URL     string //如果要返回真实响应需要给完整，所以这里要校验
-	
-}
-
-
-type Requests interface {
-	GetMethod() string                                                                   //需要获取的请求方法
-	GetUrI() string                                                                      //需要获取的请求URI
-	GetHeaders() string                                                                  //需要获取的请求Headers
-	GetParams() []byte                                                                   //需要获取的请求参数
-	HttpRequest(mothed string, url string, headers string, Params []byte) *http.Response //http请求的主体方法
 }

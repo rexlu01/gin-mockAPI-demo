@@ -130,23 +130,23 @@ func ReturnPort() (portNo int) {
 func InitConfigFile(ProbjectId string) {
 	//创建文件夹
 	err := os.Mkdir("Config/"+ProbjectId, 0777)
-	check(err)
+	Check(err)
 	err = os.Mkdir("Config/"+ProbjectId+"/mocks", 0777)
-	check(err)
+	Check(err)
 	err = os.Mkdir("Config/"+ProbjectId+"/mocks/routes", 0777)
-	check(err)
+	Check(err)
 	// err = os.Mkdir("MocksConfig/"+ProbjectId+"/returntrue", 0777)
 	// check(err)
 
 	//创建文件
 	f, err := os.Create("Config/" + ProbjectId + "/mocks.config.yaml")
-	check(err)
+	Check(err)
 	defer f.Close()
 	f, err = os.Create("Config/" + ProbjectId + "/mocks/collections.yaml")
-	check(err)
+	Check(err)
 	defer f.Close()
 	f, err = os.Create("Config/" + ProbjectId + "/mocks/routes/user.yaml")
-	check(err)
+	Check(err)
 	defer f.Close()
 
 	// f, err = os.Create("MocksConfig/" + ProbjectId + "/returntrue/response.yaml")
@@ -156,7 +156,7 @@ func InitConfigFile(ProbjectId string) {
 }
 
 //检查错误
-func check(err error) {
+func Check(err error) {
 	if err != nil {
 		panic(err)
 
